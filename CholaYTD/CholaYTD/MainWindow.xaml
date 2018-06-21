@@ -12,8 +12,12 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Grid>
-            <Image Source="img/chola.png" Grid.Column="0" Margin="0 0" />
+        <Grid Grid.Column="0">
+            <Image Source="img/chola.png"  />
         </Grid>
+
+        <StackPanel Grid.Column="1">
+            <Button Name="btn_descargar">Descargar</Button>
+        </StackPanel>
     </Grid>
 </Window>

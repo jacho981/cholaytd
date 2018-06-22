@@ -22,6 +22,7 @@ namespace CholaYTD
         private readonly Cli FfmpegCli = new Cli ( "ffmpeg.exe" );
         private readonly string TempDirectoryPath = Path.Combine ( Directory.GetCurrentDirectory (), "Temp" );
         private readonly string OutputDirectoryPath = Path.Combine ( Directory.GetCurrentDirectory (), "Output" );
+        private int numVideoProgress = 0;
 
         public MainWindow()
         {
@@ -77,51 +78,52 @@ namespace CholaYTD
 
         private async Task descargarVideoHDAsync(string id)
         {
+            numVideoProgress++;
             // Get video info
-            updateProgressBar ( 11, "Recogiendo información del video..." );
+            updateProgressBar ( 11, "Video #" + numVideoProgress + " - Recogiendo información del video..." );
             var video = await YoutubeClient.GetVideoAsync ( id );
-            updateProgressBar ( 13, "...información de video recogida." );
-            updateProgressBar ( 13, "Renombrando..." );
+            updateProgressBar ( 13, "Video #" + numVideoProgress + " - ...información de video recogida.");
+            updateProgressBar ( 13, "Video #" + numVideoProgress + " - Renombrando...");
             var cleanTitle = video.Title.Replace ( Path.GetInvalidFileNameChars (), '_' );
-            updateProgressBar ( 15, "... video renombrado." );
+            updateProgressBar ( 15, "Video #" + numVideoProgress + " - ... video renombrado.");
 
             // Get best streams
             var streamInfoSet = await YoutubeClient.GetVideoMediaStreamInfosAsync ( id );
-            updateProgressBar ( 17, "Buscando mejor stream..." );
+            updateProgressBar ( 17, "Video #" + numVideoProgress + " - Buscando mejor stream...");
             var videoStreamInfo = streamInfoSet.Video.WithHighestVideoQuality ();
-            updateProgressBar ( 19, "Buscando la mayor calidad..." );
+            updateProgressBar ( 19, "Video #" + numVideoProgress + " - Buscando la mayor calidad...");
             var audioStreamInfo = streamInfoSet.Audio.WithHighestBitrate ();
-            updateProgressBar ( 21, "Buscando el mejor sonido..." );
+            updateProgressBar ( 21, "Video #" + numVideoProgress + " - Buscando el mejor sonido...");
 
             // Download streams
-            updateProgressBar ( 22, "Creando directorio temporal..." );
+            updateProgressBar ( 22, "Video #" + numVideoProgress + " - Creando directorio temporal...");
             Directory.CreateDirectory ( TempDirectoryPath );
-            updateProgressBar ( 23, "Extrayendo extensión de archivos..." );
+            updateProgressBar ( 23, "Video #" + numVideoProgress + " - Extrayendo extensión de archivos...");
             var videoStreamFileExt = videoStreamInfo.Container.GetFileExtension ();
-            updateProgressBar ( 24, "Creando rutas de archivos..." );
+            updateProgressBar ( 24, "Video #" + numVideoProgress + " - Creando rutas de archivos...");
             var videoStreamFilePath = Path.Combine ( TempDirectoryPath, $"VID-{Guid.NewGuid ()}.{videoStreamFileExt}" );
-            updateProgressBar ( 25, "Descargando el video..." );
+            updateProgressBar ( 25, "Video #" + numVideoProgress + " - Descargando el video...");
             await YoutubeClient.DownloadMediaStreamAsync ( videoStreamInfo, videoStreamFilePath );
-            updateProgressBar ( 36, "... video descargado." );
+            updateProgressBar ( 36, "Video #" + numVideoProgress + " - ... video descargado.");
             var audioStreamFileExt = audioStreamInfo.Container.GetFileExtension ();
             var audioStreamFilePath = Path.Combine ( TempDirectoryPath, $"AUD-{Guid.NewGuid ()}.{audioStreamFileExt}" );
-            updateProgressBar ( 39, "Descargando el sonido..." );
+            updateProgressBar ( 39, "Video #" + numVideoProgress + " - Descargando el sonido...");
             await YoutubeClient.DownloadMediaStreamAsync ( audioStreamInfo, audioStreamFilePath );
-            updateProgressBar ( 49, "...sonido descargado." );
+            updateProgressBar ( 49, "Video #" + numVideoProgress + " - ...sonido descargado.");
 
             // Mux streams
-            updateProgressBar ( 50, "Creando directorio de salida..." );
+            updateProgressBar ( 50, "Video #" + numVideoProgress + " - Creando directorio de salida...");
             Directory.CreateDirectory ( OutputDirectoryPath );
             var outputFilePath = Path.Combine ( OutputDirectoryPath, $"{cleanTitle}.mp4" );
-            updateProgressBar ( 60, "Combinando video y audio..." );
+            updateProgressBar ( 60, "Video #" + numVideoProgress + " - Combinando video y audio...");
             await FfmpegCli.ExecuteAsync ( $"-i \"{videoStreamFilePath}\" -i \"{audioStreamFilePath}\" -shortest \"{outputFilePath}\" -y" );
-            updateProgressBar ( 98, "... video y audio combinados con éxito." );
+            updateProgressBar ( 98, "Video #" + numVideoProgress + " - ... video y audio combinados con éxito.");
 
             // Delete temp files
-            updateProgressBar ( 99, "Eliminando archivos temporales..." );
+            updateProgressBar ( 99, "Video #" + numVideoProgress + " - Eliminando archivos temporales...");
             File.Delete ( videoStreamFilePath );
             File.Delete ( audioStreamFilePath );
-            updateProgressBar ( 100, "... proceso finalizado." );
+            updateProgressBar ( 100, "Video #" + numVideoProgress + " - ... proceso finalizado.");
         }
 
         private async Task descargarListaReproduccionHDAsync( string id )
@@ -207,6 +209,7 @@ namespace CholaYTD
                 tB_introEnlace.IsEnabled = true;
                 grd_BarrasProgreso.Visibility = Visibility.Collapsed;
                 btn_descSWF.Visibility = Visibility.Visible;
+                numVideoProgress = 0;
                 popup_DownloadSuccess.IsOpen = true;                
             }
                 

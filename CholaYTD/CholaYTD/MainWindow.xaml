@@ -91,7 +91,7 @@
             <!-- Barra de progreso de descargas -->
             <Grid Name="grd_BarrasProgreso" Margin="0 0 0 10" Visibility="Collapsed">
                 <ProgressBar Name="pB_barraProgreso" Height="35" Width="450" />
-                <TextBlock Name="tB_barraProgresoText" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Berlin Sans FB" FontSize="16" FontStyle="Italic" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="450" />
+                <TextBlock Name="tB_barraProgresoText" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Berlin Sans FB" FontSize="16" FontStyle="Italic" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="450" TextAlignment="Center" />
             </Grid>
 
             <!-- FIRMA -->

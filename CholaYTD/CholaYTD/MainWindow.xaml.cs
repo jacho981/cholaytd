@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,19 +27,19 @@ namespace CholaYTD
             InitializeComponent ();
         }
 
-        private void btn_selCarpeta_Click( object sender, RoutedEventArgs e )
-        {
-            WinForms.FolderBrowserDialog folderDialog = new WinForms.FolderBrowserDialog ();
-            folderDialog.ShowNewFolderButton = false;
-            folderDialog.SelectedPath = System.AppDomain.CurrentDomain.BaseDirectory;
-            WinForms.DialogResult result = folderDialog.ShowDialog ();
+        //private void btn_selCarpeta_Click( object sender, RoutedEventArgs e )
+        //{
+        //    WinForms.FolderBrowserDialog folderDialog = new WinForms.FolderBrowserDialog ();
+        //    folderDialog.ShowNewFolderButton = false;
+        //    folderDialog.SelectedPath = System.AppDomain.CurrentDomain.BaseDirectory;
+        //    WinForms.DialogResult result = folderDialog.ShowDialog ();
 
-            if ( result == WinForms.DialogResult.OK )
-            {
-                string sPath = folderDialog.SelectedPath;
-                tB_carpetaDestino.Text = sPath;
-            }
-        }
+        //    if ( result == WinForms.DialogResult.OK )
+        //    {
+        //        string sPath = folderDialog.SelectedPath;
+        //        tB_carpetaDestino.Text = sPath;
+        //    }
+        //}
 
         private void btn_desc_Click( object sender, RoutedEventArgs e )
         {
@@ -159,6 +160,7 @@ namespace CholaYTD
                 }
             }
             updateProgressBar (0, "Todas las tareas finalizadas." );
+            Process.Start(AppDomain.CurrentDomain.BaseDirectory + "\\Output");
         }
     
         private void updateProgressBar (int n, string msg )

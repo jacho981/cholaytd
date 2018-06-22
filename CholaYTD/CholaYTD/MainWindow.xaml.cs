@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using CliWrap;
 using Tyrrrz.Extensions;
 using YoutubeExplode;
@@ -15,19 +16,15 @@ namespace CholaYTD
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static readonly YoutubeClient YoutubeClient = new YoutubeClient ();
-        private static readonly Cli FfmpegCli = new Cli ( "ffmpeg.exe" );
-        private static readonly string TempDirectoryPath = Path.Combine ( Directory.GetCurrentDirectory (), "Temp" );
-        private static readonly string OutputDirectoryPath = Path.Combine ( Directory.GetCurrentDirectory (), "Output" );
+        private readonly YoutubeClient YoutubeClient = new YoutubeClient ();
+        private readonly Cli FfmpegCli = new Cli ( "ffmpeg.exe" );
+        private readonly string TempDirectoryPath = Path.Combine ( Directory.GetCurrentDirectory (), "Temp" );
+        private readonly string OutputDirectoryPath = Path.Combine ( Directory.GetCurrentDirectory (), "Output" );
 
         public MainWindow()
         {
             InitializeComponent ();
         }
-
- 
-
-
 
         private void btn_selCarpeta_Click( object sender, RoutedEventArgs e )
         {
@@ -46,105 +43,137 @@ namespace CholaYTD
         private void btn_desc_Click( object sender, RoutedEventArgs e )
         {
             string[] args = { "https://www.youtube.com/watch?v=fJ9rUzIMcZQ" };
-            DistribuidorTipoDescargas ( args ).GetAwaiter ().GetResult ();
+
+            //YoutubeDownloader.MainAsync ( args );
+            pB_barraProgreso.Value = 0;
+            tB_barraProgresoText.Text = "";
+            btn_descSWF.IsEnabled = false;
+            DistribuidorTipoDescargas ( args );
         }
 
-        private static async Task descargarVideoHDAsync(string id)
+        private async Task descargarVideoHDAsync(string id)
         {
-            Console.WriteLine ( $"Working on video [{id}]..." );
-
             // Get video info
+            updateProgressBar ( 11, "Recogiendo información del video..." );
             var video = await YoutubeClient.GetVideoAsync ( id );
+            updateProgressBar ( 13, "...información de video recogida." );
+            updateProgressBar ( 13, "Renombrando..." );
             var cleanTitle = video.Title.Replace ( Path.GetInvalidFileNameChars (), '_' );
-            Console.WriteLine ( $"{video.Title}" );
+            updateProgressBar ( 15, "... video renombrado." );
 
             // Get best streams
             var streamInfoSet = await YoutubeClient.GetVideoMediaStreamInfosAsync ( id );
+            updateProgressBar ( 17, "Buscando mejor stream..." );
             var videoStreamInfo = streamInfoSet.Video.WithHighestVideoQuality ();
+            updateProgressBar ( 19, "Buscando la mayor calidad..." );
             var audioStreamInfo = streamInfoSet.Audio.WithHighestBitrate ();
+            updateProgressBar ( 21, "Buscando el mejor sonido..." );
 
             // Download streams
-            Console.WriteLine ( "Downloading..." );
+            updateProgressBar ( 22, "Creando directorio temporal..." );
             Directory.CreateDirectory ( TempDirectoryPath );
+            updateProgressBar ( 23, "Extrayendo extensión de archivos..." );
             var videoStreamFileExt = videoStreamInfo.Container.GetFileExtension ();
+            updateProgressBar ( 24, "Creando rutas de archivos..." );
             var videoStreamFilePath = Path.Combine ( TempDirectoryPath, $"VID-{Guid.NewGuid ()}.{videoStreamFileExt}" );
+            updateProgressBar ( 25, "Descargando el video..." );
             await YoutubeClient.DownloadMediaStreamAsync ( videoStreamInfo, videoStreamFilePath );
+            updateProgressBar ( 36, "... video descargado." );
             var audioStreamFileExt = audioStreamInfo.Container.GetFileExtension ();
             var audioStreamFilePath = Path.Combine ( TempDirectoryPath, $"AUD-{Guid.NewGuid ()}.{audioStreamFileExt}" );
+            updateProgressBar ( 39, "Descargando el sonido..." );
             await YoutubeClient.DownloadMediaStreamAsync ( audioStreamInfo, audioStreamFilePath );
+            updateProgressBar ( 49, "...sonido descargado." );
 
             // Mux streams
-            Console.WriteLine ( "Combining..." );
+            updateProgressBar ( 50, "Creando directorio de salida..." );
             Directory.CreateDirectory ( OutputDirectoryPath );
             var outputFilePath = Path.Combine ( OutputDirectoryPath, $"{cleanTitle}.mp4" );
+            updateProgressBar ( 60, "Combinando video y audio..." );
             await FfmpegCli.ExecuteAsync ( $"-i \"{videoStreamFilePath}\" -i \"{audioStreamFilePath}\" -shortest \"{outputFilePath}\" -y" );
+            updateProgressBar ( 98, "... video y audio combinados con éxito." );
 
             // Delete temp files
-            Console.WriteLine ( "Deleting temp files..." );
+            updateProgressBar ( 99, "Eliminando archivos temporales..." );
             File.Delete ( videoStreamFilePath );
             File.Delete ( audioStreamFilePath );
-
-            Console.WriteLine ( $"Downloaded video [{id}] to [{outputFilePath}]" );
-
+            updateProgressBar ( 100, "... proceso finalizado." );
         }
 
-        private static async Task descargarListaReproduccionHDAsync( string id )
+        private async Task descargarListaReproduccionHDAsync( string id )
         {
-            Console.WriteLine ( $"Working on playlist [{id}]..." );
-
             // Get playlist info
+            updateProgressBar ( 7, "Recogiendo informacion de lista de reproducción..." );
             var playlist = await YoutubeClient.GetPlaylistAsync ( id );
-            Console.WriteLine ( $"{playlist.Title} ({playlist.Videos.Count} videos)" );
+            updateProgressBar (9, "Información de lista de reproducción recogida.");
 
             // Work on the videos
-            Console.WriteLine ();
+            int numVideo = 1;
             foreach ( var video in playlist.Videos )
             {
+                updateProgressBar ( 10, "Empezando con el video Nº: " + numVideo );
+                numVideo++;
                 await descargarVideoHDAsync ( video.Id );
-                Console.WriteLine ();
             }
         }
 
-        private static async Task DistribuidorTipoDescargas( string[] args )
+        private async Task DistribuidorTipoDescargas( string[] args )
         {
             foreach ( var arg in args )
             {
                 // Try to determine the type of the URL/ID that was given
-
+                updateProgressBar ( 1, "Determinando tipo de enlace..." );
                 // Playlist ID
                 if ( YoutubeClient.ValidatePlaylistId ( arg ) )
                 {
+                    updateProgressBar (5, "Determinando tipo de enlace...");
                     await descargarListaReproduccionHDAsync ( arg );
                 }
-
+                
                 // Playlist URL
                 else if ( YoutubeClient.TryParsePlaylistId ( arg, out string playlistId ) )
                 {
+                    updateProgressBar ( 5, "Determinando tipo de enlace..." );
                     await descargarListaReproduccionHDAsync ( playlistId );
                 }
 
                 // Video ID
                 else if ( YoutubeClient.ValidateVideoId ( arg ) )
                 {
+                    updateProgressBar ( 5, "Determinando tipo de enlace..." );
                     await descargarVideoHDAsync ( arg );
                 }
 
                 // Video URL
                 else if ( YoutubeClient.TryParseVideoId ( arg, out string videoId ) )
                 {
+                    updateProgressBar ( 5, "Determinando tipo de enlace..." );
                     await descargarVideoHDAsync ( videoId );
                 }
 
                 // Unknown
                 else
                 {
+                    updateProgressBar ( 0, "Error: el enlace no parece válido." );
                     throw new ArgumentException ( $"Unrecognized URL or ID: [{arg}]", nameof ( arg ) );
                 }
-
-                Console.WriteLine ();
             }
+            updateProgressBar (0, "Todas las tareas finalizadas." );
+        }
+    
+        private void updateProgressBar (int n, string msg )
+        {
+            Action action = () => { setProgress ( n, msg ); };
+            pB_barraProgreso.Dispatcher.BeginInvoke ( action );
+        }
 
-            Console.WriteLine ( "Done" );
+        private void setProgress(int n, string msg)
+        {
+            pB_barraProgreso.Value = n;
+            tB_barraProgresoText.Text = msg;
+            if ( msg.Equals ( "Todas las tareas finalizadas." ) )
+                btn_descSWF.IsEnabled = true;
+            
         }
 
         private async void descargarSoloVideo ()

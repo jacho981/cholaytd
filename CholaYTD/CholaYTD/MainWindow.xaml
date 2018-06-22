@@ -22,6 +22,10 @@
                 <TextBox Name="tB_carpetaDestino" Width="400" IsReadOnly="True"/>
             </StackPanel>
             <Button Name="btn_descSWF" Click="btn_desc_Click" >DESCARGAR</Button>
+            <Grid>
+                <ProgressBar Name="pB_barraProgreso" Height="25" />
+                <TextBlock Name="tB_barraProgresoText" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
         </StackPanel>
     </Grid>
 </Window>

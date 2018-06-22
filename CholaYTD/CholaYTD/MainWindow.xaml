@@ -16,7 +16,7 @@
             <Image Source="img/chola.png"  />
         </Grid>
 
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" Margin="25 25" >
             <StackPanel Orientation="Horizontal">
                 <Button Name="btn_selCarpeta" Click="btn_selCarpeta_Click" >CARPETA</Button>
                 <TextBox Name="tB_carpetaDestino" Width="400" IsReadOnly="True"/>

@@ -16,8 +16,9 @@
             <Image Source="img/chola.png"  />
         </Grid>
 
+        <!-- TITULO APP-->
         <StackPanel Grid.Column="1" Margin="25 0" >
-            <TextBlock Text="Chola" FontFamily="H&amp;B Sketch Demo" FontSize="36" TextAlignment="Center" Margin="0,0,0,0">
+            <TextBlock Text="Chola" FontFamily="H&amp;B Sketch Demo" FontSize="36" TextAlignment="Center" Margin="0,8,0,0">
                 <TextBlock.Foreground>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF9FBED1" Offset="0"/>
@@ -25,7 +26,7 @@
                     </LinearGradientBrush>
                 </TextBlock.Foreground>
             </TextBlock>
-            <TextBlock Text="Youtube Downloader" FontFamily="H&amp;B Sketch Demo" FontSize="25" TextAlignment="Center" Margin="0,0,0,25" >
+            <TextBlock Text="Youtube Downloader" FontFamily="H&amp;B Sketch Demo" FontSize="25" TextAlignment="Center" Margin="0,0,0,12" >
                 <TextBlock.Foreground>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF9FBED1" Offset="0"/>
@@ -34,11 +35,114 @@
                 </TextBlock.Foreground>
             </TextBlock>
 
-            <Button Name="btn_descSWF" Click="btn_desc_Click" >DESCARGAR</Button>
-            <Grid>
-                <ProgressBar Name="pB_barraProgreso" Height="25" />
-                <TextBlock Name="tB_barraProgresoText" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <!-- CONTROLES -->
+
+            <!-- Caja de texto para introducir enlaces de Youtube -->
+            <TextBox Name="tB_introEnlace" Height="25" Text="Introduzca un enlace de un video o una lista de reproducción de Youtube..." 
+                     FontFamily="Berlin Sans FB" FontSize="14" FontStyle="Italic" TextAlignment="Center" VerticalContentAlignment="Center" 
+                     HorizontalContentAlignment="Center" Width="450" Background="#FFEBF3FA" Foreground="#FF495D7A" BorderBrush="#FFEBF3FA" GotFocus="tB_introEnlace_GotFocus">
+                <!--ToolTipService.ShowDuration="5000" ToolTipService.IsEnabled="False" ToolTipService.HasDropShadow="True">-->
+                <!--<TextBox.ToolTip>
+                    <ToolTip BorderThickness="2" BorderBrush="#BBBBC7" Background="#DEDAE6">
+                        <StackPanel>
+                            <TextBlock FontFamily="Berlin Sans FB" FontWeight="Bold" FontSize="14" Margin="0,0,0,5" Foreground="#495D7A">Enlace no válido</TextBlock>
+                            <TextBlock>
+                                El enlace no cumple con el formato de
+                                <LineBreak />
+                                enlace de video o lista de reproducción
+                                <LineBreak />
+                                de Youtube.
+                            </TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </TextBox.ToolTip>-->
+            </TextBox>
+
+            <!-- Botones de AÑADIR y BORRAR enlace -->
+            <Grid Margin="0 5 0 5 " Width="450">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Button Name="btn_añadirEnlace" Grid.Column="0" Height="35" FontFamily="Berlin Sans FB" FontSize="18" Margin="0 0 2 0" Background="#FF495D7A" BorderBrush="#FF495D7A" Foreground="#FFEBF3FA" Click="btn_añadirEnlace_Click">Añadir enlace</Button>
+                <Button Name="btn_borrarEnlace" Grid.Column="1" Height="35" FontFamily="Berlin Sans FB" FontSize="18" Margin="2 0 0 0" Background="#FF495D7A" BorderBrush="#FF495D7A" Foreground="#FFEBF3FA" Click="btn_borrarEnlace_Click">Borrar enlace</Button>
             </Grid>
+
+            <!-- Lista de enlaces añadidos -->
+            <ListBox Name="listaEnlaces" FontFamily="Berlin Sans FB" FontSize="14" Height="125" Width="450"  Background="#FFEBF3FA" Foreground="#FF495D7A" BorderBrush="#FFEBF3FA" />
+
+            <!-- Radio buttons -->
+            <Grid Margin="0 10 0 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <RadioButton Name="rb_normal" GroupName="rbTipoDescarga" Grid.Column="0" FontFamily="Berlin Sans FB" FontSize="16" IsChecked="True" Background="#FF9FBED1" Foreground="#FFEBF3FA" BorderBrush="#FF495D7A" >Video normal</RadioButton>
+                <RadioButton Name="rb_audio" GroupName="rbTipoDescarga" Grid.Column="1" FontFamily="Berlin Sans FB" FontSize="16" Background="#FF9FBED1" Foreground="#FFEBF3FA" BorderBrush="#FF495D7A" >Solo audio</RadioButton>
+                <RadioButton Name="rb_video" GroupName="rbTipoDescarga" Grid.Column="2" FontFamily="Berlin Sans FB" FontSize="16" Background="#FF9FBED1" Foreground="#FFEBF3FA" BorderBrush="#FF495D7A" >Solo video</RadioButton>
+            </Grid>
+
+            <!-- Botón comenzar descarga -->
+            <Button Name="btn_descSWF" Click="btn_desc_Click" Height="35" FontFamily="Berlin Sans FB" FontSize="18" Width="450" Background="#FF495D7A" BorderBrush="#FF495D7A" Foreground="#FFEBF3FA" >Comenzar descargas</Button>
+
+            <!-- Barra de progreso de descargas -->
+            <Grid Name="grd_BarrasProgreso" Margin="0 0 0 10" Visibility="Collapsed">
+                <ProgressBar Name="pB_barraProgreso" Height="35" Width="450" />
+                <TextBlock Name="tB_barraProgresoText" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Berlin Sans FB" FontSize="16" FontStyle="Italic" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="450" />
+            </Grid>
+
+            <!-- FIRMA -->
+            <DockPanel>
+                <Label DockPanel.Dock="Bottom" Width="450" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" FontFamily="Berlin Sans FB" FontSize="14" Foreground="#FF495D7A" >Tu hijo Manuel, que te quiere con locura ♥ A Coruña, 2018.</Label>
+            </DockPanel>
+
+            <!-- POPUPS -->
+            <!-- Popup aviso error enlace no válido -->
+            <Popup x:Name="popup_errorLinkFormat" PopupAnimation="Fade" Placement="MousePoint" AllowsTransparency="True" StaysOpen="False" >
+                <Border Background="#FFC55353" BorderBrush="#FF550000" CornerRadius="20" BorderThickness="3" >
+                    <StackPanel Margin="8 5">
+                        <TextBlock FontFamily="Berlin Sans FB" FontWeight="Bold" FontSize="16" Margin="0,0,0,5" Foreground="#FF630000" HorizontalAlignment="Center">Enlace no válido</TextBlock>
+                        <TextBlock FontFamily="Berlin Sans FB" FontSize="16" Margin="0,0,0,5" Foreground="#FF630000" TextAlignment="Center">
+                                El enlace no cumple con el formato
+                                <LineBreak />
+                                de enlace de video o lista de
+                                <LineBreak />
+                                reproducción de Youtube.
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </Popup>
+            <!-- Popup aviso de error de enlace ya en la lista -->
+            <Popup x:Name="popup_errorLinkInList" PopupAnimation="Fade" Placement="MousePoint" AllowsTransparency="True" StaysOpen="False" >
+                <Border Background="#FFFFBE5F" BorderBrush="#FFA05700" CornerRadius="20" BorderThickness="3" >
+                    <StackPanel Margin="8 5">
+                        <TextBlock FontFamily="Berlin Sans FB" FontWeight="Bold" FontSize="16" Margin="0,0,0,5" Foreground="#FFB85401" HorizontalAlignment="Center">Enlace repetido</TextBlock>
+                        <TextBlock FontFamily="Berlin Sans FB" FontSize="16" Margin="0,0,0,5" Foreground="#FFB85401" TextAlignment="Center">
+                                El enlace que ha introducido
+                                <LineBreak />
+                                ya se encuentra en la lista.
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </Popup>
+            <!-- Popup aviso de error de enlace ya en la lista -->
+            <Popup x:Name="popup_DownloadSuccess" PopupAnimation="Fade" Placement="Center" AllowsTransparency="True" StaysOpen="False" >
+                <Border Background="#FF97FD87" BorderBrush="#FF00A00F" CornerRadius="20" BorderThickness="3" >
+                    <StackPanel Margin="8 5">
+                        <TextBlock FontFamily="Berlin Sans FB" FontWeight="Bold" FontSize="16" Margin="0,0,0,5" Foreground="#FF00A00F" HorizontalAlignment="Center">Descargas finalizadas</TextBlock>
+                        <TextBlock FontFamily="Berlin Sans FB" FontSize="16" Margin="0,0,0,5" Foreground="#FF00A00F" TextAlignment="Center">
+                                Todas las descargas han finalizado con éxito.
+                                <LineBreak />
+                                Disfruta de tus canciones Choliña.
+                                <LineBreak />
+                                ♥♥♥
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </Popup>
         </StackPanel>
     </Grid>
 </Window>

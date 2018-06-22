@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using CliWrap;
 using Tyrrrz.Extensions;
 using YoutubeExplode;
 using YoutubeExplode.Models.MediaStreams;
-using WinForms = System.Windows.Forms;
 
 namespace CholaYTD
 {
@@ -43,12 +44,34 @@ namespace CholaYTD
 
         private void btn_desc_Click( object sender, RoutedEventArgs e )
         {
-            string[] args = { "https://www.youtube.com/watch?v=fJ9rUzIMcZQ" };
+            //string[] args = { "https://www.youtube.com/watch?v=fJ9rUzIMcZQ" };
 
-            //YoutubeDownloader.MainAsync ( args );
             pB_barraProgreso.Value = 0;
             tB_barraProgresoText.Text = "";
+
+            btn_añadirEnlace.IsEnabled = false;
+            btn_borrarEnlace.IsEnabled = false;
+            rb_audio.IsEnabled = false;
+            rb_normal.IsEnabled = false;
+            rb_video.IsEnabled = false;
             btn_descSWF.IsEnabled = false;
+            listaEnlaces.IsEnabled = false;
+            tB_introEnlace.IsEnabled = false;
+
+            btn_descSWF.Visibility = Visibility.Collapsed;
+            grd_BarrasProgreso.Visibility = Visibility.Visible;
+
+            string[] args;
+            List<string> tempList = new List<string>();
+
+            // cogemos string[] y de los elementos de la lista (EXTRAYENDO LAS URLs, NO los titulos)
+            foreach (ListBoxItem item in listaEnlaces.Items) {
+                tempList.Add((string)item.ToolTip);
+            }            
+            args = tempList.ToArray();
+
+            // chekeamos el tipo de descarga elegida en el radioButton (video normal, solo video, solo audio)
+
             DistribuidorTipoDescargas ( args );
         }
 
@@ -107,7 +130,6 @@ namespace CholaYTD
             updateProgressBar ( 7, "Recogiendo informacion de lista de reproducción..." );
             var playlist = await YoutubeClient.GetPlaylistAsync ( id );
             updateProgressBar (9, "Información de lista de reproducción recogida.");
-
             // Work on the videos
             int numVideo = 1;
             foreach ( var video in playlist.Videos )
@@ -173,8 +195,21 @@ namespace CholaYTD
         {
             pB_barraProgreso.Value = n;
             tB_barraProgresoText.Text = msg;
-            if ( msg.Equals ( "Todas las tareas finalizadas." ) )
+            if ( msg.Equals ( "Todas las tareas finalizadas." ))
+            {
                 btn_descSWF.IsEnabled = true;
+                btn_añadirEnlace.IsEnabled = true;
+                btn_borrarEnlace.IsEnabled = true;
+                rb_audio.IsEnabled = true;
+                rb_normal.IsEnabled = true;
+                rb_video.IsEnabled = true;
+                listaEnlaces.IsEnabled = true;
+                tB_introEnlace.IsEnabled = true;
+                grd_BarrasProgreso.Visibility = Visibility.Collapsed;
+                btn_descSWF.Visibility = Visibility.Visible;
+                popup_DownloadSuccess.IsOpen = true;                
+            }
+                
             
         }
 
@@ -202,6 +237,97 @@ namespace CholaYTD
             var streamInfo = streamInfoSet.Video.WithHighestVideoQuality ();
             var ext = streamInfo.Container.GetFileExtension ();
             await client.DownloadMediaStreamAsync ( streamInfo, $"downloaded_video.{ext}" );
+        }
+
+        private void tB_introEnlace_GotFocus(object sender, RoutedEventArgs e)
+        {
+            tB_introEnlace.Text = "";
+        }
+
+        private void btn_añadirEnlace_Click(object sender, RoutedEventArgs e)
+        {
+            if (YoutubeClient.ValidateVideoId(tB_introEnlace.Text.Substring(tB_introEnlace.Text.IndexOf('=')+1)) || YoutubeClient.ValidatePlaylistId(tB_introEnlace.Text.Substring(tB_introEnlace.Text.IndexOf('=') + 1)))
+            {
+                if (listaEnlaces.HasItems)
+                {
+                    bool addItemToList = true;
+                    foreach (ListBoxItem lbi in listaEnlaces.Items)
+                    {
+                        if (lbi.ToolTip.Equals(tB_introEnlace.Text))
+                        {
+                            addItemToList = false;
+                        }
+                    }
+                    if (addItemToList)
+                    {
+                        //ListBoxItem item = new ListBoxItem();
+                        //item.Content = tB_introEnlace.Text;
+
+                        RecogerInfoVideoLista(tB_introEnlace.Text);
+
+                        //listaEnlaces.Items.Add(item);
+                        //tB_introEnlace.Text = "Introduzca un enlace de un video o una lista de reproducción de Youtube...";
+                    }
+                    else
+                    {
+                        popup_errorLinkInList.IsOpen = true;
+                        tB_introEnlace.Text = "Introduzca un enlace de un video o una lista de reproducción de Youtube...";
+                    }
+                }
+                else
+                {
+                    //ListBoxItem item = new ListBoxItem();
+                    //item.Content = tB_introEnlace.Text;
+
+                    RecogerInfoVideoLista(tB_introEnlace.Text);
+
+                    //listaEnlaces.Items.Add(item);
+                    //tB_introEnlace.Text = "Introduzca un enlace de un video o una lista de reproducción de Youtube...";
+                }
+            }
+            else
+            {
+                popup_errorLinkFormat.IsOpen = true;
+                tB_introEnlace.Text = "Introduzca un enlace de un video o una lista de reproducción de Youtube...";
+            }
+        }
+
+        private async Task RecogerInfoVideoLista(string tb_url)
+        {
+            Console.WriteLine("entra en tarea asyncrona");
+            Console.WriteLine(YoutubeClient.ValidateVideoId(tb_url.Substring(tb_url.IndexOf('=') + 1)));
+            if (YoutubeClient.ValidateVideoId(tb_url.Substring(tb_url.IndexOf('=') + 1)))
+            {
+                var video = await YoutubeClient.GetVideoAsync(tb_url.Substring(tb_url.IndexOf('=') + 1));
+                string titulo = video.Title.Replace(Path.GetInvalidFileNameChars(), '_');
+                setTitulosLista(titulo);
+            }
+            else if (YoutubeClient.ValidatePlaylistId(tb_url.Substring(tb_url.IndexOf('=') + 1)))
+            {
+                var playlist = await YoutubeClient.GetPlaylistAsync(tb_url.Substring(tb_url.IndexOf('=') + 1));
+                string titulo = "(" + playlist.Videos.Count + " videos) " + playlist.Title;
+                setTitulosLista(titulo);
+            }
+        }
+
+        private void updateTitulosLista(string title)
+        {
+            Action action = () => { setTitulosLista(title); };
+            listaEnlaces.Dispatcher.BeginInvoke(action);
+        }
+
+        private void setTitulosLista(string title)
+        {
+            ListBoxItem item = new ListBoxItem();
+            item.Content = title;
+            item.ToolTip = tB_introEnlace.Text;
+            listaEnlaces.Items.Add(item);
+            tB_introEnlace.Text = "Introduzca un enlace de un video o una lista de reproducción de Youtube...";
+        }
+
+        private void btn_borrarEnlace_Click(object sender, RoutedEventArgs e)
+        {
+            listaEnlaces.Items.RemoveAt(listaEnlaces.SelectedIndex);
         }
     }
 }

@@ -332,5 +332,10 @@ namespace CholaYTD
         {
             listaEnlaces.Items.RemoveAt(listaEnlaces.SelectedIndex);
         }
+
+        private void grd_exit_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            App.Current.Shutdown();
+        }
     }
 }

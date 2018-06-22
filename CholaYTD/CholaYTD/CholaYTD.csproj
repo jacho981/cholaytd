@@ -121,6 +121,10 @@
     <Content Include="ffmpeg.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="img\cancelll.png" />
+    <Resource Include="img\cancellll.png" />
+    <Resource Include="img\cancell.png" />
+    <Resource Include="img\cancel.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

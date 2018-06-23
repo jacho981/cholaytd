@@ -121,6 +121,7 @@
     <Content Include="ffmpeg.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="img\dot-background-png-23.png" />
     <Resource Include="img\cancelll.png" />
     <Resource Include="img\cancellll.png" />
     <Resource Include="img\cancell.png" />

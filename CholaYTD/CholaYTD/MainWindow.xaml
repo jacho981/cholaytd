@@ -16,7 +16,8 @@
             <Image Source="img/chola.png"  />
         </Grid>
 
-        <Grid Cursor="Hand" Name="grd_exit" Grid.Column="1" Height="16" Width="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 5 5 0" MouseDown="grd_exit_MouseDown" Panel.ZIndex="2" >
+        <!-- BOTON SALIR -->
+        <Grid Cursor="Hand" Name="grd_exit" Grid.Column="1" Height="32" Width="32" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 15 20 0" MouseDown="grd_exit_MouseDown" Panel.ZIndex="2" >
             <Grid.Background>
                 <ImageBrush ImageSource="img/cancelll.png"/>
             </Grid.Background>
@@ -80,7 +81,7 @@
             <ListBox Name="listaEnlaces" FontFamily="Berlin Sans FB" FontSize="14" Height="125" Width="450"  Background="#FFEBF3FA" Foreground="#FF495D7A" BorderBrush="#FFEBF3FA" />
 
             <!-- Radio buttons -->
-            <Grid Margin="0 10 0 10">
+            <Grid Name="radioButtonGrid" Margin="0 10 0 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -96,7 +97,7 @@
             <Button Name="btn_descSWF" Click="btn_desc_Click" Height="35" FontFamily="Berlin Sans FB" FontSize="18" Width="450" Background="#FF495D7A" BorderBrush="#FF495D7A" Foreground="#FFEBF3FA" Cursor="Hand" >Comenzar descargas</Button>
 
             <!-- Barra de progreso de descargas -->
-            <Grid Name="grd_BarrasProgreso" Margin="0 0 0 10" Visibility="Collapsed">
+            <Grid Name="grd_BarrasProgreso" Margin="0 0 0 0" Visibility="Collapsed">
                 <ProgressBar Name="pB_barraProgreso" Height="35" Width="450" />
                 <TextBlock Name="tB_barraProgresoText" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Berlin Sans FB" FontSize="16" FontStyle="Italic" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="450" TextAlignment="Center" />
             </Grid>

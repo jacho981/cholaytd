@@ -26,7 +26,9 @@ namespace CholaYTD
         private readonly Cli FfmpegCli = new Cli ( "ffmpeg.exe" );
         private readonly string TempDirectoryPath = Path.Combine ( Directory.GetCurrentDirectory (), "Temp" );
         private readonly string OutputDirectoryPath = Path.Combine ( Directory.GetCurrentDirectory (), "Output" );
+
         private int numVideoProgress = 0;
+        private List<string> failedDownloads = new List<string>();
 
         public MainWindow()
         {
@@ -49,45 +51,48 @@ namespace CholaYTD
 
         private void btn_desc_Click( object sender, RoutedEventArgs e )
         {
-            //string[] args = { "https://www.youtube.com/watch?v=fJ9rUzIMcZQ" };
+            MessageBoxResult dialogConfirm = System.Windows.MessageBox.Show("¿Confirma que quiere comenzar el proceso de descargas?", "Confirmación de descarga", System.Windows.MessageBoxButton.YesNo);
+            if(dialogConfirm == MessageBoxResult.Yes)
+            {
+                pB_barraProgreso.Value = 0;
+                tB_barraProgresoText.Text = "";
 
-            pB_barraProgreso.Value = 0;
-            tB_barraProgresoText.Text = "";
+                btn_añadirEnlace.IsEnabled = false;
+                btn_borrarEnlace.IsEnabled = false;
+                rb_audio.IsEnabled = false;
+                rb_normal.IsEnabled = false;
+                rb_video.IsEnabled = false;
+                btn_descSWF.IsEnabled = false;
+                listaEnlaces.IsEnabled = false;
+                tB_introEnlace.IsEnabled = false;
 
-            btn_añadirEnlace.IsEnabled = false;
-            btn_borrarEnlace.IsEnabled = false;
-            rb_audio.IsEnabled = false;
-            rb_normal.IsEnabled = false;
-            rb_video.IsEnabled = false;
-            btn_descSWF.IsEnabled = false;
-            listaEnlaces.IsEnabled = false;
-            tB_introEnlace.IsEnabled = false;
+                btn_descSWF.Visibility = Visibility.Collapsed;
+                grd_BarrasProgreso.Visibility = Visibility.Visible;
 
-            btn_descSWF.Visibility = Visibility.Collapsed;
-            grd_BarrasProgreso.Visibility = Visibility.Visible;
+                string[] args;
+                List<string> tempList = new List<string>();
 
-            string[] args;
-            List<string> tempList = new List<string>();
+                // cogemos string[] y de los elementos de la lista (EXTRAYENDO LAS URLs, NO los titulos)
+                foreach (ListBoxItem item in listaEnlaces.Items)
+                {
+                    tempList.Add((string)item.ToolTip);
+                }
+                args = tempList.ToArray();
 
-            // cogemos string[] y de los elementos de la lista (EXTRAYENDO LAS URLs, NO los titulos)
-            foreach (ListBoxItem item in listaEnlaces.Items) {
-                tempList.Add((string)item.ToolTip);
+                // chekeamos el tipo de descarga elegida en el radioButton (video normal, solo video, solo audio)
+                if ((bool)rb_normal.IsChecked)
+                {
+                    DistribuidorTipoDescargas(args);
+                }
+                else if ((bool)rb_audio.IsChecked)
+                {
+                    DistribuidorTipoDescargas(args);
+                }
+                else if ((bool)rb_video.IsChecked)
+                {
+                    DistribuidorTipoDescargas(args);
+                }
             }            
-            args = tempList.ToArray();
-
-            // chekeamos el tipo de descarga elegida en el radioButton (video normal, solo video, solo audio)
-            if ((bool)rb_normal.IsChecked)
-            {
-                DistribuidorTipoDescargas(args);
-            }
-            else if ((bool)rb_audio.IsChecked)
-            {
-                DistribuidorTipoDescargas(args);
-            }
-            else if ((bool)rb_video.IsChecked)
-            {
-                DistribuidorTipoDescargas(args);
-            }
         }
 
         private async Task descargarVideoHDAsync(string id)
@@ -143,6 +148,8 @@ namespace CholaYTD
             } catch (VideoUnavailableException ex)
             {
                 Console.WriteLine("Excepción capturada: " + ex.Message);
+                Console.WriteLine("Video NO DISPONIBLE: https://www.youtube.com/watch?v=" + id);
+                failedDownloads.Add(id);
             }
         }
 
@@ -183,6 +190,8 @@ namespace CholaYTD
             } catch (VideoUnavailableException ex)
             {
                 Console.WriteLine("Excepcion capturada: " + ex.Message);
+                Console.WriteLine("Video NO DISPONIBLE: https://www.youtube.com/watch?v=" + id);
+                failedDownloads.Add(id);
             }
             // Edit mp3 metadata
             //Console.WriteLine("Writing metadata...");
@@ -253,7 +262,10 @@ namespace CholaYTD
             }
             catch (VideoUnavailableException ex)
             {
+                // EXCEPCION VideoUnavailableException (video no disponible)
                 Console.WriteLine("Excepción capturada: " + ex.Message);
+                Console.WriteLine("Video NO DISPONIBLE: https://www.youtube.com/watch?v=" + id);
+                failedDownloads.Add(id);
             }
         }
 
@@ -357,7 +369,7 @@ namespace CholaYTD
                 }
             }
             updateProgressBar (0, "Todas las tareas finalizadas." );
-            Process.Start(AppDomain.CurrentDomain.BaseDirectory + "\\Output");
+            //Process.Start(AppDomain.CurrentDomain.BaseDirectory + "\\Output");
         }
     
         private void updateProgressBar (int n, string msg )
@@ -384,10 +396,33 @@ namespace CholaYTD
                 grd_BarrasProgreso.Visibility = Visibility.Collapsed;
                 btn_descSWF.Visibility = Visibility.Visible;
                 numVideoProgress = 0;
-                popup_DownloadSuccess.IsOpen = true;                
-            }
-                
-            
+                //popup_DownloadSuccess.IsOpen = true;
+
+                string youtubeURLStarting = "https://www.youtube.com/watch?v=";
+                string diagMsg = "El proceso de descarga finalizó exitosamente.";
+                if (failedDownloads.Any())
+                {
+                    diagMsg += "\n\nSin embargo ";
+                    if(!(failedDownloads.Count > 1))
+                    {
+                        diagMsg += "el siguiente video no estaba disponible:\n";
+                        diagMsg += "\n" + youtubeURLStarting + failedDownloads.ElementAt(0);
+                    }
+                    else
+                    {
+                        diagMsg += "los siguientes videos no estaban disponibles:\n";
+                        foreach(string idFailedVideo in failedDownloads)
+                            diagMsg += "\n" + youtubeURLStarting + idFailedVideo;
+                    }
+                    MessageBoxResult dialogConfirm = System.Windows.MessageBox.Show(diagMsg, "Descargas Finalizadas", System.Windows.MessageBoxButton.OK);
+                    Process.Start(AppDomain.CurrentDomain.BaseDirectory + "\\Output");
+                }
+                else
+                {
+                    MessageBoxResult dialogConfirm = System.Windows.MessageBox.Show("El proceso de descarga finalizó exitosamente.", "Descargas Finalizadas", System.Windows.MessageBoxButton.OK);
+                    Process.Start(AppDomain.CurrentDomain.BaseDirectory + "\\Output");
+                }                
+            }            
         }
 
         private async void descargarSoloVideo ()
@@ -421,6 +456,7 @@ namespace CholaYTD
             tB_introEnlace.Text = "";
             tB_introEnlace.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF495D7A"));
             tB_introEnlace.FontWeight = FontWeights.Normal;
+            tB_introEnlace.FontStyle = FontStyles.Normal;
         }
 
         private void btn_añadirEnlace_Click(object sender, RoutedEventArgs e)
@@ -450,6 +486,7 @@ namespace CholaYTD
                     else
                     {
                         popup_errorLinkInList.IsOpen = true;
+                        tB_introEnlace.FontStyle = FontStyles.Italic;
                         tB_introEnlace.Text = "Introduzca un enlace de un video o una lista de reproducción de Youtube...";
                     }
                 }
@@ -467,14 +504,14 @@ namespace CholaYTD
             else
             {
                 popup_errorLinkFormat.IsOpen = true;
+                tB_introEnlace.FontStyle = FontStyles.Italic;
                 tB_introEnlace.Text = "Introduzca un enlace de un video o una lista de reproducción de Youtube...";
             }
         }
 
         private async Task RecogerInfoVideoLista(string tb_url)
         {
-            Console.WriteLine("entra en tarea asyncrona");
-            Console.WriteLine(YoutubeClient.ValidateVideoId(tb_url.Substring(tb_url.IndexOf('=') + 1)));
+            //Console.WriteLine(YoutubeClient.ValidateVideoId(tb_url.Substring(tb_url.IndexOf('=') + 1)));
             try
             {
                 if (YoutubeClient.ValidateVideoId(tb_url.Substring(tb_url.IndexOf('=') + 1)))
@@ -491,6 +528,9 @@ namespace CholaYTD
                 }
             } catch (VideoUnavailableException ex)
             {
+
+                // EXCEPCION VideoUnavailableException (video no disponible)
+
                 tB_introEnlace.Text = "EL VIDEO QUE HA INTRODUCIDO NO ESTÁ DISPONIBLE";
                 tB_introEnlace.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFC55353"));
                 tB_introEnlace.FontWeight = FontWeights.Bold;
@@ -511,6 +551,7 @@ namespace CholaYTD
             item.Content = title;
             item.ToolTip = tB_introEnlace.Text;
             listaEnlaces.Items.Add(item);
+            tB_introEnlace.FontStyle = FontStyles.Italic;
             tB_introEnlace.Text = "Introduzca un enlace de un video o una lista de reproducción de Youtube...";
         }
 

@@ -12,7 +12,9 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" Grid.ColumnSpan="2" Width="800" Height="403" HorizontalAlignment="Left">
+        <!-- IMAGEN DE FONDO -->
+        
+        <!--<Grid Grid.Column="0" Grid.ColumnSpan="2" Width="800" Height="403" HorizontalAlignment="Left">
             <Image Source="img/dot-background-png-23.png" RenderTransformOrigin="0.5,0.5" Stretch="Fill" >
                 <Image.RenderTransform>
                     <TransformGroup>
@@ -23,14 +25,14 @@
                     </TransformGroup>
                 </Image.RenderTransform>
             </Image>
-        </Grid>
+        </Grid>-->
 
         <Grid Grid.Column="0">
-            <Image Source="img/chola.png"  />
+            <Image Name="img_X_salir" Source="img/chola.png" />
         </Grid>
 
         <!-- BOTON SALIR -->
-        <Grid Cursor="Hand" Name="grd_exit" Grid.Column="1" Height="32" Width="32" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 18 24 0" MouseDown="grd_exit_MouseDown" Panel.ZIndex="2" >
+        <Grid Cursor="Hand" Name="grd_exit" Grid.Column="1" Height="32" Width="32" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 19 24 0" MouseDown="grd_exit_MouseDown" Panel.ZIndex="2" >
             <Grid.Background>
                 <ImageBrush ImageSource="img/cancel.png"/>
             </Grid.Background>

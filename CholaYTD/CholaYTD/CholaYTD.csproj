@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>chola_ico.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\packages\AngleSharp.0.9.9.1\lib\net45\AngleSharp.dll</HintPath>
@@ -140,6 +143,8 @@
     <Resource Include="img\chola_ico.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="img\chola_ico.ico" />
+    <Resource Include="chola_ico.ico" />
     <Content Include="ffmpeg.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -90,15 +90,15 @@ namespace CholaYTD
                     // chekeamos el tipo de descarga elegida en el radioButton (video normal, solo video, solo audio)
                     if ((bool)rb_normal.IsChecked)
                     {
-                        DistribuidorTipoDescargas(args);
+                        var mnbv9586 =DistribuidorTipoDescargas(args);
                     }
                     else if ((bool)rb_audio.IsChecked)
                     {
-                        DistribuidorTipoDescargas(args);
+                        var abcd1234 = DistribuidorTipoDescargas(args);
                     }
                     else if ((bool)rb_video.IsChecked)
                     {
-                        DistribuidorTipoDescargas(args);
+                        var gdfg74854 = DistribuidorTipoDescargas(args);
                     }
                 }
                 deshacerPantallaBorrosa();
@@ -483,7 +483,7 @@ namespace CholaYTD
                         //ListBoxItem item = new ListBoxItem();
                         //item.Content = tB_introEnlace.Text;
 
-                        RecogerInfoVideoLista(tB_introEnlace.Text);
+                        var gdfgdfgdf = RecogerInfoVideoLista(tB_introEnlace.Text);
 
                         //listaEnlaces.Items.Add(item);
                         //tB_introEnlace.Text = "Introduzca un enlace de un video o una lista de reproducción de Youtube...";
@@ -500,7 +500,7 @@ namespace CholaYTD
                     //ListBoxItem item = new ListBoxItem();
                     //item.Content = tB_introEnlace.Text;
 
-                    RecogerInfoVideoLista(tB_introEnlace.Text);
+                    var potrui454 = RecogerInfoVideoLista(tB_introEnlace.Text);
 
                     //listaEnlaces.Items.Add(item);
                     //tB_introEnlace.Text = "Introduzca un enlace de un video o una lista de reproducción de Youtube...";
@@ -540,7 +540,7 @@ namespace CholaYTD
                 tB_introEnlace.Text = "EL VIDEO QUE HA INTRODUCIDO NO ESTÁ DISPONIBLE";
                 tB_introEnlace.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFC55353"));
                 tB_introEnlace.FontWeight = FontWeights.Bold;
-                Console.WriteLine("El video con URL: " + tb_url + ", no se encuentra disponible.");
+                Console.WriteLine("El video con URL: " + tb_url + ", no se encuentra disponible." + ex.Message);
             }
             
         }

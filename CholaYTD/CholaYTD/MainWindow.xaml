@@ -5,65 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CholaYTD"
         mc:Ignorable="d"
-        Title="MainWindow" Height="403" Width="800" Background="#2F3138" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" AllowsTransparency="True" WindowStyle="None" Icon="img/chola_ico.png" UseLayoutRounding="True" SnapsToDevicePixels="True">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+        Title="MainWindow" Height="405" Width="802"  ResizeMode="NoResize" WindowStartupLocation="CenterScreen" AllowsTransparency="True" WindowStyle="None" Icon="img/chola_ico.png" UseLayoutRounding="True" SnapsToDevicePixels="True" Background="{x:Null}">
+    <Border BorderBrush="#FF495D7A" BorderThickness="2" CornerRadius="15" Background="#2F3138" Width="800" Height="403" >
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <!-- Imagen Chola -->
+            <Grid Grid.Column="0">
+                <Rectangle RadiusX="15" RadiusY="15" Width="300" Height="403" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
+                    <Rectangle.Fill>
+                        <ImageBrush x:Name="myimage" ImageSource="img/chola.png" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <!--<Image Name="img_X_salir" Source="img/chola.png" Width="300" HorizontalAlignment="Left" VerticalAlignment="Bottom" />-->
+            </Grid>
 
-        <!-- IMAGEN DE FONDO -->
-        
-        <!--<Grid Grid.Column="0" Grid.ColumnSpan="2" Width="800" Height="403" HorizontalAlignment="Left">
-            <Image Source="img/dot-background-png-23.png" RenderTransformOrigin="0.5,0.5" Stretch="Fill" >
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform ScaleY="1" ScaleX="-1"/>
-                        <SkewTransform AngleY="0" AngleX="0"/>
-                        <RotateTransform CenterX="0.5"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-        </Grid>-->
-
-        <Grid Grid.Column="0">
-            <Image Name="img_X_salir" Source="img/chola.png" />
-        </Grid>
-
-        <!-- BOTON SALIR -->
-        <Grid Cursor="Hand" Name="grd_exit" Grid.Column="1" Height="32" Width="32" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 19 24 0"
+            <!-- BOTON SALIR -->
+            <Grid Cursor="Hand" Name="grd_exit" Grid.Column="1" Height="32" Width="32" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 19 24 0"
               MouseDown="grd_exit_MouseDown" Panel.ZIndex="2" MouseEnter="grd_exit_MouseEnter" MouseLeave="grd_exit_MouseLeave" >
-            <Image Name="img_exit" Source="img/cancel_hover2.png" />
-        </Grid>
+                <Image Name="img_exit" Source="img/cancel_hover2.png" />
+            </Grid>
 
-        <!-- TITULO APP-->
-        <StackPanel Grid.Column="1" Margin="25 0" >
-            <TextBlock Text="Chola" FontFamily="H&amp;B Sketch Demo" FontSize="36" TextAlignment="Center" Margin="0,8,0,0">
-                <TextBlock.Foreground>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF9FBED1" Offset="0"/>
-                        <GradientStop Color="#FFEBF3FA" Offset="1"/>
-                    </LinearGradientBrush>
-                </TextBlock.Foreground>
-            </TextBlock>
-            <TextBlock Text="Youtube Downloader" FontFamily="H&amp;B Sketch Demo" FontSize="25" TextAlignment="Center" Margin="0,0,0,12" >
-                <TextBlock.Foreground>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF9FBED1" Offset="0"/>
-                        <GradientStop Color="#FFEBF3FA" Offset="1"/>
-                    </LinearGradientBrush>
-                </TextBlock.Foreground>
-            </TextBlock>
+            <!-- TITULO APP-->
+            <StackPanel Grid.Column="1" Margin="25 0" >
+                <TextBlock Text="Chola" FontFamily="H&amp;B Sketch Demo" FontSize="36" TextAlignment="Center" Margin="0,8,0,0" Foreground="#9FBED1"/>
+                <TextBlock Text="Youtube Downloader" FontFamily="H&amp;B Sketch Demo" FontSize="25" TextAlignment="Center" Margin="0,0,0,12" Foreground="#FF9FBED1" />
 
-            <!-- CONTROLES -->
+                <!-- CONTROLES -->
 
-            <!-- Caja de texto para introducir enlaces de Youtube -->
-            <TextBox Name="tB_introEnlace" Height="25" Text="Introduzca un enlace de un video o una lista de reproducción de Youtube..." 
+                <!-- Caja de texto para introducir enlaces de Youtube -->
+                <TextBox Name="tB_introEnlace" Height="25" Text="Introduzca un enlace de un video o una lista de reproducción de Youtube..." 
                      FontFamily="Berlin Sans FB" FontSize="14" FontStyle="Italic" TextAlignment="Center" VerticalContentAlignment="Center" 
                      HorizontalContentAlignment="Center" Width="450" Background="#FFEBF3FA" Foreground="#FF495D7A" BorderBrush="#FFEBF3FA" GotFocus="tB_introEnlace_GotFocus" Cursor="Pen">
-                <!--ToolTipService.ShowDuration="5000" ToolTipService.IsEnabled="False" ToolTipService.HasDropShadow="True">-->
-                <!--<TextBox.ToolTip>
+                    <!--ToolTipService.ShowDuration="5000" ToolTipService.IsEnabled="False" ToolTipService.HasDropShadow="True">-->
+                    <!--<TextBox.ToolTip>
                     <ToolTip BorderThickness="2" BorderBrush="#BBBBC7" Background="#DEDAE6">
                         <StackPanel>
                             <TextBlock FontFamily="Berlin Sans FB" FontWeight="Bold" FontSize="14" Margin="0,0,0,5" Foreground="#495D7A">Enlace no válido</TextBlock>
@@ -77,96 +55,96 @@
                         </StackPanel>
                     </ToolTip>
                 </TextBox.ToolTip>-->
-            </TextBox>
+                </TextBox>
 
-            <!-- Botones de AÑADIR y BORRAR enlace -->
-            <Grid Margin="0 5 0 5 " Width="450">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
+                <!-- Botones de AÑADIR y BORRAR enlace -->
+                <Grid Margin="0 5 0 5 " Width="450">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
 
-                <Button Name="btn_añadirEnlace" Grid.Column="0" Height="35" FontFamily="Berlin Sans FB" FontSize="18" Margin="0 0 2 0" Background="#FF495D7A" BorderBrush="#FF495D7A" Foreground="#FFEBF3FA" Click="btn_añadirEnlace_Click" Cursor="Hand" MouseEnter="btn_añadirEnlace_MouseEnter" MouseLeave="btn_añadirEnlace_MouseLeave">Añadir enlace</Button>
-                <Button Name="btn_borrarEnlace" Grid.Column="1" Height="35" FontFamily="Berlin Sans FB" FontSize="18" Margin="2 0 0 0" Background="#FF495D7A" BorderBrush="#FF495D7A" Foreground="#FFEBF3FA" Click="btn_borrarEnlace_Click" Cursor="Hand" MouseEnter="btn_borrarEnlace_MouseEnter" MouseLeave="btn_borrarEnlace_MouseLeave">Borrar enlace</Button>
-            </Grid>
+                    <Button Name="btn_añadirEnlace" Grid.Column="0" Height="35" FontFamily="Berlin Sans FB" FontSize="18" Margin="0 0 2 0" Background="#FF495D7A" BorderBrush="#FF495D7A" Foreground="#FFEBF3FA" Click="btn_añadirEnlace_Click" Cursor="Hand" MouseEnter="btn_añadirEnlace_MouseEnter" MouseLeave="btn_añadirEnlace_MouseLeave">Añadir enlace</Button>
+                    <Button Name="btn_borrarEnlace" Grid.Column="1" Height="35" FontFamily="Berlin Sans FB" FontSize="18" Margin="2 0 0 0" Background="#FF495D7A" BorderBrush="#FF495D7A" Foreground="#FFEBF3FA" Click="btn_borrarEnlace_Click" Cursor="Hand" MouseEnter="btn_borrarEnlace_MouseEnter" MouseLeave="btn_borrarEnlace_MouseLeave">Borrar enlace</Button>
+                </Grid>
 
-            <!-- Lista de enlaces añadidos -->
-            <ListBox Name="listaEnlaces" FontFamily="Berlin Sans FB" FontSize="14" Height="125" Width="450"  Background="#FFEBF3FA" Foreground="#FF495D7A" BorderBrush="#FFEBF3FA" />
+                <!-- Lista de enlaces añadidos -->
+                <ListBox Name="listaEnlaces" FontFamily="Berlin Sans FB" FontSize="14" Height="125" Width="450"  Background="#FFEBF3FA" Foreground="#FF495D7A" BorderBrush="#FFEBF3FA" />
 
-            <!-- Radio buttons -->
-            <Grid Name="radioButtonGrid" Margin="0 10 0 10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
+                <!-- Radio buttons -->
+                <Grid Name="radioButtonGrid" Margin="0 10 0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
 
-                <RadioButton Name="rb_normal" GroupName="rbTipoDescarga" Grid.Column="0" FontFamily="Berlin Sans FB" FontSize="16" IsChecked="True" Background="#FF9FBED1" Foreground="#FFEBF3FA" BorderBrush="#FF495D7A" >Video normal</RadioButton>
-                <RadioButton Name="rb_audio" GroupName="rbTipoDescarga" Grid.Column="1" FontFamily="Berlin Sans FB" FontSize="16" Background="#FF9FBED1" Foreground="#FFEBF3FA" BorderBrush="#FF495D7A" >Solo audio</RadioButton>
-                <RadioButton Name="rb_video" GroupName="rbTipoDescarga" Grid.Column="2" FontFamily="Berlin Sans FB" FontSize="16" Background="#FF9FBED1" Foreground="#FFEBF3FA" BorderBrush="#FF495D7A" >Solo video</RadioButton>
-            </Grid>
+                    <RadioButton Name="rb_normal" GroupName="rbTipoDescarga" Grid.Column="0" FontFamily="Berlin Sans FB" FontSize="16" IsChecked="True" Background="#FF9FBED1" Foreground="#FFEBF3FA" BorderBrush="#FF495D7A" >Video normal</RadioButton>
+                    <RadioButton Name="rb_audio" GroupName="rbTipoDescarga" Grid.Column="1" FontFamily="Berlin Sans FB" FontSize="16" Background="#FF9FBED1" Foreground="#FFEBF3FA" BorderBrush="#FF495D7A" >Solo audio</RadioButton>
+                    <RadioButton Name="rb_video" GroupName="rbTipoDescarga" Grid.Column="2" FontFamily="Berlin Sans FB" FontSize="16" Background="#FF9FBED1" Foreground="#FFEBF3FA" BorderBrush="#FF495D7A" >Solo video</RadioButton>
+                </Grid>
 
-            <!-- Botón comenzar descarga -->
-            <Button Name="btn_descSWF" Click="btn_desc_Click" Height="35" FontFamily="Berlin Sans FB" FontSize="18" Width="450" Background="#FF495D7A" BorderBrush="#FF495D7A" Foreground="#FFEBF3FA" Cursor="Hand" MouseEnter="btn_descSWF_MouseEnter" MouseLeave="btn_descSWF_MouseLeave" >Comenzar descargas</Button>
+                <!-- Botón comenzar descarga -->
+                <Button Name="btn_descSWF" Click="btn_desc_Click" Height="35" FontFamily="Berlin Sans FB" FontSize="18" Width="450" Background="#FF495D7A" BorderBrush="#FF495D7A" Foreground="#FFEBF3FA" Cursor="Hand" MouseEnter="btn_descSWF_MouseEnter" MouseLeave="btn_descSWF_MouseLeave" >Comenzar descargas</Button>
 
-            <!-- Barra de progreso de descargas -->
-            <Grid Name="grd_BarrasProgreso" Margin="0 0 0 0" Visibility="Collapsed">
-                <ProgressBar Name="pB_barraProgreso" Height="35" Width="450" />
-                <TextBlock Name="tB_barraProgresoText" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Berlin Sans FB" FontSize="16" FontStyle="Italic" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="450" TextAlignment="Center" />
-            </Grid>
+                <!-- Barra de progreso de descargas -->
+                <Grid Name="grd_BarrasProgreso" Margin="0 0 0 0" Visibility="Collapsed">
+                    <ProgressBar Name="pB_barraProgreso" Height="35" Width="450" />
+                    <TextBlock Name="tB_barraProgresoText" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Berlin Sans FB" FontSize="16" FontStyle="Italic" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="450" TextAlignment="Center" />
+                </Grid>
 
-            <!-- FIRMA -->
-            <DockPanel>
-                <Label DockPanel.Dock="Bottom" Width="450" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" FontFamily="Berlin Sans FB" FontSize="14" Foreground="#FF495D7A" >Tu hijo Manuel, que te quiere con locura ♥ A Coruña, 2018.</Label>
-            </DockPanel>
+                <!-- FIRMA -->
+                <DockPanel>
+                    <Label DockPanel.Dock="Bottom" Width="450" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" FontFamily="Berlin Sans FB" FontSize="14" Foreground="#FF495D7A" >Tu hijo Manuel, que te quiere con locura ♥ A Coruña, 2018.</Label>
+                </DockPanel>
 
-            <!-- POPUPS -->
-            <!-- Popup aviso error enlace no válido -->
-            <Popup x:Name="popup_errorLinkFormat" PopupAnimation="Fade" Placement="MousePoint" AllowsTransparency="True" StaysOpen="False" >
-                <Border Background="#FFC55353" BorderBrush="#FF550000" CornerRadius="20" BorderThickness="3" >
-                    <StackPanel Margin="8 5">
-                        <TextBlock FontFamily="Berlin Sans FB" FontWeight="Bold" FontSize="16" Margin="0,0,0,5" Foreground="#FF630000" HorizontalAlignment="Center">Enlace no válido</TextBlock>
-                        <TextBlock FontFamily="Berlin Sans FB" FontSize="16" Margin="0,0,0,5" Foreground="#FF630000" TextAlignment="Center">
+                <!-- POPUPS -->
+                <!-- Popup aviso error enlace no válido -->
+                <Popup x:Name="popup_errorLinkFormat" PopupAnimation="Fade" Placement="MousePoint" AllowsTransparency="True" StaysOpen="False" >
+                    <Border Background="#FFC55353" BorderBrush="#FF550000" CornerRadius="20" BorderThickness="3" >
+                        <StackPanel Margin="8 5">
+                            <TextBlock FontFamily="Berlin Sans FB" FontWeight="Bold" FontSize="16" Margin="0,0,0,5" Foreground="#FF630000" HorizontalAlignment="Center">Enlace no válido</TextBlock>
+                            <TextBlock FontFamily="Berlin Sans FB" FontSize="16" Margin="0,0,0,5" Foreground="#FF630000" TextAlignment="Center">
                                 El enlace no cumple con el formato
                                 <LineBreak />
                                 de enlace de video o lista de
                                 <LineBreak />
                                 reproducción de Youtube.
-                        </TextBlock>
-                        <Image Source="img/access-denied.png" />
-                    </StackPanel>
-                </Border>
-            </Popup>
-            <!-- Popup aviso de error de enlace ya en la lista -->
-            <Popup x:Name="popup_errorLinkInList" PopupAnimation="Fade" Placement="MousePoint" AllowsTransparency="True" StaysOpen="False" >
-                <Border Background="#FFFFBE5F" BorderBrush="#FFA05700" CornerRadius="20" BorderThickness="3" >
-                    <StackPanel Margin="8 5">
-                        <TextBlock FontFamily="Berlin Sans FB" FontWeight="Bold" FontSize="16" Margin="0,0,0,5" Foreground="#FFB85401" HorizontalAlignment="Center">Enlace repetido</TextBlock>
-                        <TextBlock FontFamily="Berlin Sans FB" FontSize="16" Margin="0,0,0,5" Foreground="#FFB85401" TextAlignment="Center">
+                            </TextBlock>
+                            <Image Source="img/access-denied.png" />
+                        </StackPanel>
+                    </Border>
+                </Popup>
+                <!-- Popup aviso de error de enlace ya en la lista -->
+                <Popup x:Name="popup_errorLinkInList" PopupAnimation="Fade" Placement="MousePoint" AllowsTransparency="True" StaysOpen="False" >
+                    <Border Background="#FFFFBE5F" BorderBrush="#FFA05700" CornerRadius="20" BorderThickness="3" >
+                        <StackPanel Margin="8 5">
+                            <TextBlock FontFamily="Berlin Sans FB" FontWeight="Bold" FontSize="16" Margin="0,0,0,5" Foreground="#FFB85401" HorizontalAlignment="Center">Enlace repetido</TextBlock>
+                            <TextBlock FontFamily="Berlin Sans FB" FontSize="16" Margin="0,0,0,5" Foreground="#FFB85401" TextAlignment="Center">
                                 El enlace que ha introducido
                                 <LineBreak />
                                 ya se encuentra en la lista.
-                        </TextBlock>
-                        <Image Source="img/list.png" />
-                    </StackPanel>
-                </Border>
-            </Popup>
-            <!-- Popup aviso de lista vacía -->
-            <Popup x:Name="popup_errorListaVacia" PopupAnimation="Fade" Placement="MousePoint" AllowsTransparency="True" StaysOpen="False" >
-                <Border Background="#FFFFBE5F" BorderBrush="#FFA05700" CornerRadius="20" BorderThickness="3" >
-                    <StackPanel Margin="8 5">
-                        <TextBlock FontFamily="Berlin Sans FB" FontWeight="Bold" FontSize="16" Margin="0,0,0,5" Foreground="#FFB85401" HorizontalAlignment="Center">Lista vacía</TextBlock>
-                        <TextBlock FontFamily="Berlin Sans FB" FontSize="16" Margin="0,0,0,5" Foreground="#FFB85401" TextAlignment="Center">
+                            </TextBlock>
+                            <Image Source="img/list.png" />
+                        </StackPanel>
+                    </Border>
+                </Popup>
+                <!-- Popup aviso de lista vacía -->
+                <Popup x:Name="popup_errorListaVacia" PopupAnimation="Fade" Placement="MousePoint" AllowsTransparency="True" StaysOpen="False" >
+                    <Border Background="#FFFFBE5F" BorderBrush="#FFA05700" CornerRadius="20" BorderThickness="3" >
+                        <StackPanel Margin="8 5">
+                            <TextBlock FontFamily="Berlin Sans FB" FontWeight="Bold" FontSize="16" Margin="0,0,0,5" Foreground="#FFB85401" HorizontalAlignment="Center">Lista vacía</TextBlock>
+                            <TextBlock FontFamily="Berlin Sans FB" FontSize="16" Margin="0,0,0,5" Foreground="#FFB85401" TextAlignment="Center">
                                 La lista de videos no
                                 <LineBreak />
                                 contiene ningun video.
-                        </TextBlock>
-                        <Image Source="img/clipboards.png" />
-                    </StackPanel>                    
-                </Border>
-            </Popup>
-            <!-- Popup aviso de descarga correcta -->
-            <!--<Popup x:Name="popup_DownloadSuccess" PopupAnimation="Fade" Placement="Center" AllowsTransparency="True" StaysOpen="False" >
+                            </TextBlock>
+                            <Image Source="img/clipboards.png" />
+                        </StackPanel>
+                    </Border>
+                </Popup>
+                <!-- Popup aviso de descarga correcta -->
+                <!--<Popup x:Name="popup_DownloadSuccess" PopupAnimation="Fade" Placement="Center" AllowsTransparency="True" StaysOpen="False" >
                 <Border Background="#FF97FD87" BorderBrush="#FF00A00F" CornerRadius="20" BorderThickness="3" >
                     <StackPanel Margin="8 5">
                         <TextBlock FontFamily="Berlin Sans FB" FontWeight="Bold" FontSize="16" Margin="0,0,0,5" Foreground="#FF00A00F" HorizontalAlignment="Center">Descargas finalizadas</TextBlock>
@@ -180,6 +158,7 @@
                     </StackPanel>
                 </Border>
             </Popup>-->
-        </StackPanel>
-    </Grid>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>

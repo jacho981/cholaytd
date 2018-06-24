@@ -14,8 +14,6 @@ namespace CholaYTD
     /// </summary>
     public partial class WpfMBFinConfirm : Window
     {
-        private List<string> listaEnlaces;
-
         public WpfMBFinConfirm()
         {            
             InitializeComponent();

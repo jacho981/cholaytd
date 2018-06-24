@@ -143,14 +143,10 @@
     <Content Include="ffmpeg.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="img\cancel_hover2.png" />
     <Resource Include="img\cloud-computing.png" />
     <Resource Include="img\download.png" />
-    <Resource Include="img\cancel_click.png" />
     <Resource Include="img\cancel_hover.png" />
-    <Resource Include="img\dot-background-png-23.png" />
-    <Resource Include="img\cancelll.png" />
-    <Resource Include="img\cancellll.png" />
-    <Resource Include="img\cancell.png" />
     <Resource Include="img\cancel.png" />
   </ItemGroup>
   <ItemGroup>

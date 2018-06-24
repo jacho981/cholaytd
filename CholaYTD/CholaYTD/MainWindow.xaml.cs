@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using CliWrap;
 using Tyrrrz.Extensions;
 using YoutubeExplode;
@@ -586,6 +586,55 @@ namespace CholaYTD
         {
             // eliminamos pantalla borrosa cuando el dialogo se cierra
             this.Effect = null;
+        }
+
+        // EFECTOS BOTONES
+        private void btn_descSWF_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            btn_descSWF.Foreground = (Brush)(new BrushConverter().ConvertFrom("#FF495D7A"));
+        }
+
+        private void btn_descSWF_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            btn_descSWF.Foreground = (Brush)(new BrushConverter().ConvertFrom("#FFEBF3FA"));
+        }
+
+        private void btn_añadirEnlace_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            btn_añadirEnlace.Foreground = (Brush)(new BrushConverter().ConvertFrom("#FF495D7A"));
+        }
+
+        private void btn_añadirEnlace_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            btn_añadirEnlace.Foreground = (Brush)(new BrushConverter().ConvertFrom("#FFEBF3FA"));
+        }
+
+        private void btn_borrarEnlace_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            btn_borrarEnlace.Foreground = (Brush)(new BrushConverter().ConvertFrom("#FF495D7A"));
+        }
+
+        private void btn_borrarEnlace_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            btn_borrarEnlace.Foreground = (Brush)(new BrushConverter().ConvertFrom("#FFEBF3FA"));
+        }
+
+        private void grd_exit_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            img_exit.Source = new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "img/cancel.png"));
+            img_exit.Height = 34;
+            img_exit.Width = 34;
+            grd_exit.Height = 34;
+            grd_exit.Width = 34;
+        }
+
+        private void grd_exit_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            img_exit.Source = new BitmapImage(new Uri(BaseUriHelper.GetBaseUri(this), "img/cancel_hover2.png"));
+            img_exit.Height = 32;
+            img_exit.Width = 32;
+            grd_exit.Height = 32;
+            grd_exit.Width = 32;
         }
     }
 }

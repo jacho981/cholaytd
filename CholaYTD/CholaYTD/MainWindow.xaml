@@ -133,6 +133,7 @@
                                 <LineBreak />
                                 reproducción de Youtube.
                         </TextBlock>
+                        <Image Source="img/access-denied.png" />
                     </StackPanel>
                 </Border>
             </Popup>
@@ -146,6 +147,7 @@
                                 <LineBreak />
                                 ya se encuentra en la lista.
                         </TextBlock>
+                        <Image Source="img/list.png" />
                     </StackPanel>
                 </Border>
             </Popup>
@@ -159,7 +161,8 @@
                                 <LineBreak />
                                 contiene ningun video.
                         </TextBlock>
-                    </StackPanel>
+                        <Image Source="img/clipboards.png" />
+                    </StackPanel>                    
                 </Border>
             </Popup>
             <!-- Popup aviso de descarga correcta -->

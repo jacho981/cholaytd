@@ -143,6 +143,9 @@
     <Content Include="ffmpeg.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="img\access-denied.png" />
+    <Resource Include="img\list.png" />
+    <Resource Include="img\clipboards.png" />
     <Resource Include="img\cancel_hover2.png" />
     <Resource Include="img\cloud-computing.png" />
     <Resource Include="img\download.png" />

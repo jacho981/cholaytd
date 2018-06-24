@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -33,6 +34,8 @@ namespace CholaYTD
         public MainWindow()
         {
             InitializeComponent ();
+
+        ((INotifyCollectionChanged)listaEnlaces.Items).CollectionChanged += mListBox_CollectionChanged;
         }
 
         //private void btn_selCarpeta_Click( object sender, RoutedEventArgs e )
@@ -516,6 +519,7 @@ namespace CholaYTD
             //Console.WriteLine(YoutubeClient.ValidateVideoId(tb_url.Substring(tb_url.IndexOf('=') + 1)));
             try
             {
+                btn_añadirEnlace.IsEnabled = false;
                 if (YoutubeClient.ValidateVideoId(tb_url.Substring(tb_url.IndexOf('=') + 1)))
                 {
                     var video = await YoutubeClient.GetVideoAsync(tb_url.Substring(tb_url.IndexOf('=') + 1));
@@ -532,7 +536,7 @@ namespace CholaYTD
             {
 
                 // EXCEPCION VideoUnavailableException (video no disponible)
-
+                btn_añadirEnlace.IsEnabled = true;
                 tB_introEnlace.Text = "EL VIDEO QUE HA INTRODUCIDO NO ESTÁ DISPONIBLE";
                 tB_introEnlace.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFC55353"));
                 tB_introEnlace.FontWeight = FontWeights.Bold;
@@ -635,6 +639,14 @@ namespace CholaYTD
             img_exit.Width = 32;
             grd_exit.Height = 32;
             grd_exit.Width = 32;
+        }
+
+        private void mListBox_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                btn_añadirEnlace.IsEnabled = true;
+            }
         }
     }
 }

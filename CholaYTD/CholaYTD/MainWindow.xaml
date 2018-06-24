@@ -151,8 +151,21 @@
                     </StackPanel>
                 </Border>
             </Popup>
+            <!-- Popup aviso de lista vacía -->
+            <Popup x:Name="popup_errorListaVacia" PopupAnimation="Fade" Placement="MousePoint" AllowsTransparency="True" StaysOpen="False" >
+                <Border Background="#FFFFBE5F" BorderBrush="#FFA05700" CornerRadius="20" BorderThickness="3" >
+                    <StackPanel Margin="8 5">
+                        <TextBlock FontFamily="Berlin Sans FB" FontWeight="Bold" FontSize="16" Margin="0,0,0,5" Foreground="#FFB85401" HorizontalAlignment="Center">Lista vacía</TextBlock>
+                        <TextBlock FontFamily="Berlin Sans FB" FontSize="16" Margin="0,0,0,5" Foreground="#FFB85401" TextAlignment="Center">
+                                La lista de videos no
+                                <LineBreak />
+                                contiene ningun video.
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </Popup>
             <!-- Popup aviso de descarga correcta -->
-            <Popup x:Name="popup_DownloadSuccess" PopupAnimation="Fade" Placement="Center" AllowsTransparency="True" StaysOpen="False" >
+            <!--<Popup x:Name="popup_DownloadSuccess" PopupAnimation="Fade" Placement="Center" AllowsTransparency="True" StaysOpen="False" >
                 <Border Background="#FF97FD87" BorderBrush="#FF00A00F" CornerRadius="20" BorderThickness="3" >
                     <StackPanel Margin="8 5">
                         <TextBlock FontFamily="Berlin Sans FB" FontWeight="Bold" FontSize="16" Margin="0,0,0,5" Foreground="#FF00A00F" HorizontalAlignment="Center">Descargas finalizadas</TextBlock>
@@ -165,7 +178,7 @@
                         </TextBlock>
                     </StackPanel>
                 </Border>
-            </Popup>
+            </Popup>-->
         </StackPanel>
     </Grid>
 </Window>

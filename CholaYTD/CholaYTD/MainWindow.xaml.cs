@@ -51,48 +51,56 @@ namespace CholaYTD
 
         private void btn_desc_Click( object sender, RoutedEventArgs e )
         {
-            MessageBoxResult dialogConfirm = System.Windows.MessageBox.Show("¿Confirma que quiere comenzar el proceso de descargas?", "Confirmación de descarga", System.Windows.MessageBoxButton.YesNo);
-            if (dialogConfirm == MessageBoxResult.Yes)
+            //MessageBoxResult dialogConfirm = System.Windows.MessageBox.Show("¿Confirma que quiere comenzar el proceso de descargas?", "Confirmación de descarga", System.Windows.MessageBoxButton.YesNo);
+            //if (dialogConfirm == MessageBoxResult.Yes)
+            if (!(listaEnlaces.Items.IsEmpty))
             {
-                pB_barraProgreso.Value = 0;
-                tB_barraProgresoText.Text = "";
-
-                btn_añadirEnlace.IsEnabled = false;
-                btn_borrarEnlace.IsEnabled = false;
-                rb_audio.IsEnabled = false;
-                rb_normal.IsEnabled = false;
-                rb_video.IsEnabled = false;
-                btn_descSWF.IsEnabled = false;
-                listaEnlaces.IsEnabled = false;
-                tB_introEnlace.IsEnabled = false;
-
-                btn_descSWF.Visibility = Visibility.Collapsed;
-                grd_BarrasProgreso.Visibility = Visibility.Visible;
-
-                string[] args;
-                List<string> tempList = new List<string>();
-
-                // cogemos string[] y de los elementos de la lista (EXTRAYENDO LAS URLs, NO los titulos)
-                foreach (ListBoxItem item in listaEnlaces.Items)
+                WpfMBFinConfirm dialogConfirm = new WpfMBFinConfirm();
+                hacerPantallaBorrosa();
+                if ((bool)dialogConfirm.ShowDialog())
                 {
-                    tempList.Add((string)item.ToolTip);
-                }
-                args = tempList.ToArray();
+                    pB_barraProgreso.Value = 0;
+                    tB_barraProgresoText.Text = "";
 
-                // chekeamos el tipo de descarga elegida en el radioButton (video normal, solo video, solo audio)
-                if ((bool)rb_normal.IsChecked)
-                {
-                    DistribuidorTipoDescargas(args);
+                    btn_añadirEnlace.IsEnabled = false;
+                    btn_borrarEnlace.IsEnabled = false;
+                    rb_audio.IsEnabled = false;
+                    rb_normal.IsEnabled = false;
+                    rb_video.IsEnabled = false;
+                    btn_descSWF.IsEnabled = false;
+                    listaEnlaces.IsEnabled = false;
+                    tB_introEnlace.IsEnabled = false;
+
+                    btn_descSWF.Visibility = Visibility.Collapsed;
+                    grd_BarrasProgreso.Visibility = Visibility.Visible;
+
+                    string[] args;
+                    List<string> tempList = new List<string>();
+
+                    // cogemos string[] y de los elementos de la lista (EXTRAYENDO LAS URLs, NO los titulos)
+                    foreach (ListBoxItem item in listaEnlaces.Items)
+                    {
+                        tempList.Add((string)item.ToolTip);
+                    }
+                    args = tempList.ToArray();
+
+                    // chekeamos el tipo de descarga elegida en el radioButton (video normal, solo video, solo audio)
+                    if ((bool)rb_normal.IsChecked)
+                    {
+                        DistribuidorTipoDescargas(args);
+                    }
+                    else if ((bool)rb_audio.IsChecked)
+                    {
+                        DistribuidorTipoDescargas(args);
+                    }
+                    else if ((bool)rb_video.IsChecked)
+                    {
+                        DistribuidorTipoDescargas(args);
+                    }
                 }
-                else if ((bool)rb_audio.IsChecked)
-                {
-                    DistribuidorTipoDescargas(args);
-                }
-                else if ((bool)rb_video.IsChecked)
-                {
-                    DistribuidorTipoDescargas(args);
-                }
+                deshacerPantallaBorrosa();
             }
+            popup_errorListaVacia.IsOpen = true;
         }
 
         private async Task descargarVideoHDAsync(string id)
@@ -407,6 +415,10 @@ namespace CholaYTD
                 }
                 else
                 {
+                    WpfMBFinSuccess dialogoPrueba = new WpfMBFinSuccess();
+                    hacerPantallaBorrosa();
+                    dialogoPrueba.ShowDialog();
+                    deshacerPantallaBorrosa();
                     Process.Start(AppDomain.CurrentDomain.BaseDirectory + "\\Output");
                 }                
             }            

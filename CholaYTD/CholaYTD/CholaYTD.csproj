@@ -71,6 +71,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="WpfMBFinConfirm.xaml.cs">
+      <DependentUpon>WpfMBFinConfirm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WpfMBFinSuccess.xaml.cs">
+      <DependentUpon>WpfMBFinSuccess.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WpfMBFin.xaml.cs">
       <DependentUpon>WpfMBFin.xaml</DependentUpon>
     </Compile>
@@ -87,6 +93,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="WpfMBFinConfirm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WpfMBFinSuccess.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WpfMBFin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -129,6 +143,8 @@
     <Content Include="ffmpeg.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="img\cloud-computing.png" />
+    <Resource Include="img\download.png" />
     <Resource Include="img\cancel_click.png" />
     <Resource Include="img\cancel_hover.png" />
     <Resource Include="img\dot-background-png-23.png" />

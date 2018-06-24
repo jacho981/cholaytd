@@ -1,4 +1,4 @@
-﻿<Window x:Class="CholaYTD.WpfMBFin"
+﻿<Window x:Class="CholaYTD.WpfMBFinSuccess"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -16,16 +16,10 @@
                 <Label Content="DESCARGAS FINALIZADAS" HorizontalAlignment="Center" Margin="0 10 0 0" Foreground="#9FBED1" FontFamily="Berlin Sans FB"
                        FontSize="20" />
                 <!-- Descripcion -->
-                <Label Content="Las descargas finalizaron con éxito." HorizontalAlignment="Center" Margin="0 0 0 0" Foreground="#54B258" 
+                <Label Content="Todas las descargas finalizaron con éxito." HorizontalAlignment="Center" Margin="0 5 0 11" Foreground="#54B258" 
                        FontFamily="Berlin Sans FB" FontSize="16" />
-                <!-- Msg error -->
-                <Label HorizontalAlignment="Center" Margin="0 0 0 0" Foreground="#FFBF3737" 
-                       Name="err_label" FontFamily="Berlin Sans FB" FontSize="14" />
-                <!-- Enlaces -->
-                <ScrollViewer Height="100" Width="350" VerticalScrollBarVisibility="Hidden">
-                    <TextBlock Name="textBox_enlaces" HorizontalAlignment="Center" Margin="0 0 0 0" TextAlignment="Left"
-                           Foreground="#FFEBF3FA" FontFamily="Berlin Sans FB" FontSize="15" TextWrapping="Wrap" />
-                </ScrollViewer>                
+                <!-- Imagen -->
+                <Image Height="100" Width="100" Source="img/download.png" HorizontalAlignment="Center" />
             </StackPanel>
             <!-- Boton OK -->
             <StackPanel Name="stackPanelCerrar" DockPanel.Dock="Bottom" Height="35" Width="60" VerticalAlignment="Bottom" Margin="0 0 0 10">

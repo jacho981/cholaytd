@@ -52,7 +52,7 @@ namespace CholaYTD
         private void btn_desc_Click( object sender, RoutedEventArgs e )
         {
             MessageBoxResult dialogConfirm = System.Windows.MessageBox.Show("¿Confirma que quiere comenzar el proceso de descargas?", "Confirmación de descarga", System.Windows.MessageBoxButton.YesNo);
-            if(dialogConfirm == MessageBoxResult.Yes)
+            if (dialogConfirm == MessageBoxResult.Yes)
             {
                 pB_barraProgreso.Value = 0;
                 tB_barraProgresoText.Text = "";
@@ -92,7 +92,7 @@ namespace CholaYTD
                 {
                     DistribuidorTipoDescargas(args);
                 }
-            }            
+            }
         }
 
         private async Task descargarVideoHDAsync(string id)
@@ -396,30 +396,17 @@ namespace CholaYTD
                 grd_BarrasProgreso.Visibility = Visibility.Collapsed;
                 btn_descSWF.Visibility = Visibility.Visible;
                 numVideoProgress = 0;
-                //popup_DownloadSuccess.IsOpen = true;
 
-                string youtubeURLStarting = "https://www.youtube.com/watch?v=";
-                string diagMsg = "El proceso de descarga finalizó exitosamente.";
                 if (failedDownloads.Any())
                 {
-                    diagMsg += "\n\nSin embargo ";
-                    if(!(failedDownloads.Count > 1))
-                    {
-                        diagMsg += "el siguiente video no estaba disponible:\n";
-                        diagMsg += "\n" + youtubeURLStarting + failedDownloads.ElementAt(0);
-                    }
-                    else
-                    {
-                        diagMsg += "los siguientes videos no estaban disponibles:\n";
-                        foreach(string idFailedVideo in failedDownloads)
-                            diagMsg += "\n" + youtubeURLStarting + idFailedVideo;
-                    }
-                    MessageBoxResult dialogConfirm = System.Windows.MessageBox.Show(diagMsg, "Descargas Finalizadas", System.Windows.MessageBoxButton.OK);
+                    WpfMBFin dialogoPrueba = new WpfMBFin(failedDownloads);
+                    hacerPantallaBorrosa();
+                    dialogoPrueba.ShowDialog();
+                    deshacerPantallaBorrosa();
                     Process.Start(AppDomain.CurrentDomain.BaseDirectory + "\\Output");
                 }
                 else
                 {
-                    MessageBoxResult dialogConfirm = System.Windows.MessageBox.Show("El proceso de descarga finalizó exitosamente.", "Descargas Finalizadas", System.Windows.MessageBoxButton.OK);
                     Process.Start(AppDomain.CurrentDomain.BaseDirectory + "\\Output");
                 }                
             }            
@@ -563,6 +550,20 @@ namespace CholaYTD
         private void grd_exit_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             App.Current.Shutdown();
+        }
+
+        private void hacerPantallaBorrosa()
+        {
+            //hacemos la pantalla borrosa
+            System.Windows.Media.Effects.BlurEffect objBlur = new System.Windows.Media.Effects.BlurEffect();
+            objBlur.Radius = 4;
+            this.Effect = objBlur;
+        }
+
+        private void deshacerPantallaBorrosa()
+        {
+            // eliminamos pantalla borrosa cuando el dialogo se cierra
+            this.Effect = null;
         }
     }
 }

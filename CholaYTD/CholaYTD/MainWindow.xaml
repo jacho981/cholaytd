@@ -151,7 +151,7 @@
                     </StackPanel>
                 </Border>
             </Popup>
-            <!-- Popup aviso de error de enlace ya en la lista -->
+            <!-- Popup aviso de descarga correcta -->
             <Popup x:Name="popup_DownloadSuccess" PopupAnimation="Fade" Placement="Center" AllowsTransparency="True" StaysOpen="False" >
                 <Border Background="#FF97FD87" BorderBrush="#FF00A00F" CornerRadius="20" BorderThickness="3" >
                     <StackPanel Margin="8 5">

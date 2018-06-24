@@ -1,5 +1,9 @@
+añadir ventanas modales:
+	- error enlace no válido
+	- error enlace ya en la lista
+	- descarga exitosa
+
 cambiar colores de elementos "IsDisabled=true;"
 cambiar colores de elementos con "MouseOver"
-
 
 hacer un style template blanco y rosa

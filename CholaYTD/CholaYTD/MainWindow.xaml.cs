@@ -100,7 +100,10 @@ namespace CholaYTD
                 }
                 deshacerPantallaBorrosa();
             }
-            popup_errorListaVacia.IsOpen = true;
+            else
+            {
+                popup_errorListaVacia.IsOpen = true;
+            }            
         }
 
         private async Task descargarVideoHDAsync(string id)
@@ -556,7 +559,14 @@ namespace CholaYTD
 
         private void btn_borrarEnlace_Click(object sender, RoutedEventArgs e)
         {
-            listaEnlaces.Items.RemoveAt(listaEnlaces.SelectedIndex);
+            if (!(listaEnlaces.Items.IsEmpty))
+            {
+                listaEnlaces.Items.RemoveAt(listaEnlaces.SelectedIndex);
+            }
+            else
+            {
+                popup_errorListaVacia.IsOpen = true;
+            }
         }
 
         private void grd_exit_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

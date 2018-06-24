@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CholaYTD"
         mc:Ignorable="d"
-        Title="MainWindow" Height="403" Width="800" Background="#2F3138" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" AllowsTransparency="True" WindowStyle="None" Icon="img/chola_ico.png">
+        Title="MainWindow" Height="403" Width="800" Background="#2F3138" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" AllowsTransparency="True" WindowStyle="None" Icon="img/chola_ico.png" UseLayoutRounding="True" SnapsToDevicePixels="True">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300" />

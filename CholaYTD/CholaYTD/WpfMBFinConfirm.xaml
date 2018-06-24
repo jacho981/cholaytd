@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CholaYTD"
         mc:Ignorable="d"
-        Title="WpfMBFinConfirm" Height="275" Width="400" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="{x:Null}" Foreground="#FFEBF3FA" AllowsTransparency="True" SnapsToDevicePixels="True">
+        Title="WpfMBFinConfirm" Height="275" Width="400" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="{x:Null}" Foreground="#FFEBF3FA" AllowsTransparency="True" UseLayoutRounding="True" SnapsToDevicePixels="True">
     <Border BorderThickness="1" BorderBrush="#000000" CornerRadius="25" Background="#2F3138" VerticalAlignment="Center" HorizontalAlignment="Center" >
         <Border.Effect>
             <DropShadowEffect Opacity="0.8"/>

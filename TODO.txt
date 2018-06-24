@@ -1,3 +1,5 @@
+cambiar letras titulo de la app
+
 cambiar colores de elementos "IsDisabled=true;"
 cambiar colores de elementos con "MouseOver"
 
